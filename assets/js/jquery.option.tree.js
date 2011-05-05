@@ -3,7 +3,7 @@
  * Author: Derek Herman 
  * URL: http://valendesigns.com
  * Email: derek@valendesigns.com
- *
+ * Updated 5/4/11 by Connor Warnock, added Checkbox Toggle
  */
  
 /**
@@ -95,6 +95,33 @@
   };
   $(document).ready(function () {
     styleSelect.init()
+  })
+})(jQuery);
+
+/**
+ *
+ * Toggle Option
+ *
+ * Toggles option below a checkbox
+ * Dependencies: jQuery
+ *
+ */
+(function ($) {
+  toggleOption = {
+  	init: function () {
+ 		if($("input.checkbox-toggle:checked").val() !== undefined) {
+			$("input.checkbox-toggle").closest('.option').next().show();
+		} 
+		else {
+			$("input.checkbox-toggle").closest('.option').next().hide();
+		}
+	 	$("input.checkbox-toggle").click(function(){
+	 		$(this).closest('.option').next().fadeToggle(400);//fadeToggle(400)
+	 	}); 
+	 }	
+  };
+  $(document).ready(function () {
+    toggleOption.init()
   })
 })(jQuery);
 
@@ -434,6 +461,7 @@
           $('.option-options', '#edit-'+c).hide();
         } else if ( 
             temp_select == 'Checkbox' || 
+            temp_select == 'Checkbox Toggle' || //Display 'Options' for checkbox toggle value when adding field
             temp_select == 'Radio' || 
             temp_select == 'Select'
           ) {
@@ -584,6 +612,7 @@
           $('.option-options', editRow).hide();
         } else if ( 
             temp_select == 'Checkbox' || 
+            temp_select == 'Checkbox Toggle' || //Display 'Options' for checkbox toggle value for added fields            
             temp_select == 'Radio' || 
             temp_select == 'Select'
           ) {
@@ -843,7 +872,7 @@
   	delete_slider_image: function(e) {
       $(e).parents('li').remove();
     }
-  };
+  };  
   $(document).ready(function () {
     ImageSlider.init();
   })
