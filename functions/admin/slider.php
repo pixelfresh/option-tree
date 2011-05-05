@@ -11,6 +11,7 @@
  *
  * @return string
  */
+
 function option_tree_slider( $value, $settings, $int ) 
 { 
 ?>
@@ -51,6 +52,10 @@ function option_tree_slider( $value, $settings, $int )
  *
  * @return string
  */
+ 
+ 
+
+ 
 function slider_view( $id, $image, $count ) 
 {
   // required fileds
@@ -86,7 +91,7 @@ function slider_view( $id, $image, $count )
     array(
       'name'  => 'description',
       'type'  => 'textarea',
-      'label' => 'Description',
+      'label' => 'Caption',
       'class' => ''
     )
   );
@@ -106,7 +111,43 @@ function slider_view( $id, $image, $count )
     <div class="option-tree-slider-body">
       <?php
       foreach( $image_slider_fields as $field ) {
-        if ( $field['type'] == 'text' ) {
+      
+    // Slider image upload code begins here- adds image upload button below 'Image URL' field
+    //Code below is copied from upload.php in this directory.  Note: id tags modified
+	// from "id[count][name]" to "id-count-name" because jquery doesn't like []'s for id's.
+	// Turns out using [] is not valid css for id's...
+      	if ( $field['name'] == 'image' ){ ?>
+      		<p>
+      		  <label><?php echo $field['label']; ?></label>       		  
+		        <input type="text" name="<?php echo $id; ?>[<?php echo $count; ?>][<?php echo $field['name']; ?>]" id="<?php echo $id; ?>-<?php echo $count; ?>-<?php echo $field['name']; ?>" value="<?php echo ( isset( $image[$field['name']] ) ? stripslashes($image[$field['name']]) : '' ); ?>" class="upload<?php if ( isset( $image[$field['name']] ) ) { echo ' has-file'; } ?>"/>
+		        <input id="upload_<?php echo $id ?>-<?php echo $count ?>-<?php echo $field['name'] ?>" class="upload_button" type="button" value="Upload" rel="<?php echo '85'; ?>" />
+		       </p>
+		         <div class="screenshot" id="<?php echo $id ?>-<?php echo $count ?>-<?php echo $field['name'] ?>_image">
+		          <?php 
+		          if ( isset( $image[$field['name']] ) && $image[$field['name']] != '' ) 
+		          { 
+		            $remove = '<a href="javascript:(void);" class="remove">Remove</a>';
+		            $screenshot_image = $image[$field['name']]; //temp var needed because $image var redefined below
+		            $image = preg_match( '/(^.*\.jpg|jpeg|png|gif|ico*)/i', $image[$field['name']] );
+		            if ( $image ) 
+		            {
+		              echo '<img src="'.$screenshot_image.'" alt="" />'.$remove.'';
+		            } 
+		            else 
+		            {
+		              $parts = explode( "/", $image[$field['name']] );
+		              for( $i = 0; $i < sizeof($parts); ++$i ) 
+		              {
+		                $title = $parts[$i];
+		              }
+		              echo '<div class="no_image"><a href="'.$image[$field['name']].'">'.$title.'</a>'.$remove.'</div>';
+		            }
+		          }
+		          ?>
+		        </div> 
+	<?php //end slider image upload addition
+      		
+    } else if ( $field['type'] == 'text' ) {
           echo '
           <p>
             <label>'.$field['label'].'</label>
