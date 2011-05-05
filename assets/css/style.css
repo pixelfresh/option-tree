@@ -718,6 +718,19 @@ a:hover strong {
           .option-tree-slider-wrap .option-tree-slider-body {
             display: ;
           }
+          /* Image slider upload function addition to css */
+	      .option-tree-slider p {
+	      	clear: both;
+	      }
+          .option-tree-slider-wrap .option-tree-slider-body .screenshot {
+          	display: block; 
+          	width: 320px;
+          	margin: 10px 0 10px 0;
+          }
+          .option-tree-slider-wrap .option-tree-slider-body .screenshot img {
+          	max-width: 310px; 
+          }
+          /* End Addition */
 /* Docs */
 #framework_wrap #options_tabs.docs {
   font-size: 11px !important;
