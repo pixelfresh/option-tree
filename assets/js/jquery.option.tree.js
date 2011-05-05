@@ -144,7 +144,7 @@
           btnContent = true;
       // On Click
       $('.upload_button').live("click", function () {
-        formfield = $(this).prev('input').attr('name');
+        formfield = $(this).prev('input').attr('id'); //Changed .attr('name') to .attr('id'), needed for slider uploader
         formID = $(this).attr('rel');
         tb_show('', 'media-upload.php?post_id='+formID+'&type=image&amp;TB_iframe=1');
         return false;
